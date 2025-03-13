@@ -1,0 +1,187 @@
+Ingrediente
+package negocio;
+
+public class Ingrediente {
+	//Propriedades da Classe
+	private String nome = "";
+	private int quantidade = 0;
+	private String unidade = "";
+	//Métodos Construtores da Classe
+	public Ingrediente() {
+		super();
+	}
+	public Ingrediente(String nome, int quantidade, String unidade) {
+		super();
+		this.nome = nome;
+		this.quantidade = quantidade;
+		this.unidade = unidade;
+	}
+	//Métodos de Acesso da Classe
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public int getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+	public String getUnidade() {
+		return unidade;
+	}
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
+	}
+		
+	
+	
+	
+}
+-----------------------------------------------------------------------------
+Drink 
+package negocio;
+
+public abstract class Drink {
+	//Propriedades da Classe
+	private Ingrediente[] colecao = new Ingrediente[10];
+	private int qtdIngredientes = 0;
+	
+	//Métodos da Classe
+	public void adicionar(Ingrediente objIngrediente) {
+		colecao[qtdIngredientes] = objIngrediente;
+		qtdIngredientes++;
+	}
+	
+	public void beber() {
+		for(int i = 0; i < qtdIngredientes ; i++) {
+			System.out.println(colecao[i].getQuantidade() + " " + colecao[i].getUnidade()
+					+ " de " + colecao[i].getNome());
+			
+		}
+	}
+
+}
+-------------------------------------------------------------------------------
+Mixer 
+package negocio;
+
+public interface Mixer {
+	public void misturar ();
+}
+--------------------------------------------------
+Caipirinha 
+package negocio;
+
+public class Caipirinha extends Drink implements Mixer {
+	public void misturar() {
+		super.adicionar(new Ingrediente("Cachaça", 100, "ml"));
+		super.adicionar(new Ingrediente("Limão", 3, "unidades"));
+		super.adicionar(new Ingrediente("Açúcar", 5, "g"));
+		super.adicionar(new Ingrediente("Gelo", 8, "pedras"));
+	}
+
+}
+--------------------------------------------------
+DryMartini
+package negocio;
+
+public class DryMartini extends Drink implements Mixer {
+	public void misturar () {
+		super.adicionar(new Ingrediente("Gyn", 100, "ml"));
+		super.adicionar(new Ingrediente("Vodka", 50, "ml"));
+		super.adicionar(new Ingrediente("Vermuth", 10, "ml"));
+		super.adicionar(new Ingrediente("Gelo", 10, "pedras"));
+		super.adicionar(new Ingrediente("Azeitona", 3, "unidades"));
+	}
+
+}
+---------------------------------------------------
+Old Fashion
+package negocio;
+
+public class OldFashion extends Drink implements Mixer {
+	public void misturar () {
+		super.adicionar(new Ingrediente("Whiskey", 200, "ml"));
+		super.adicionar(new Ingrediente("Bitter", 2, "gotas"));
+		super.adicionar(new Ingrediente("Gelo", 1, "esfera"));
+		super.adicionar(new Ingrediente("Açúcar", 5, "g"));
+		super.adicionar(new Ingrediente("Laranja", 1, "raspa"));
+		
+	}
+
+}
+--------------------------------------------------
+Moscow Mule
+package negocio;
+
+public class OldFashion extends Drink implements Mixer {
+	public void misturar () {
+		super.adicionar(new Ingrediente("Whiskey", 200, "ml"));
+		super.adicionar(new Ingrediente("Bitter", 2, "gotas"));
+		super.adicionar(new Ingrediente("Gelo", 1, "esfera"));
+		super.adicionar(new Ingrediente("Açúcar", 5, "g"));
+		super.adicionar(new Ingrediente("Laranja", 1, "raspa"));
+		
+	}
+
+}
+---------------------------------------------------
+VisaoBar (Apresentação)
+package apresentacao;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import negocio.Caipirinha;
+import negocio.Drink;
+import negocio.DryMartini;
+import negocio.Mixer;
+import negocio.MoscowMule;
+import negocio.OldFashion;
+
+public class VisaoBar {
+	public static void main(String[] args) {
+		//Declaração de Variáveis
+		BufferedReader leitor = new BufferedReader(new InputStreamReader(System.in));
+		Drink objDrink = null;
+		int opcao = 0;
+		
+		//Entrada de Dados
+		try {
+			System.out.println("+==================+");
+			System.out.println("|    Cardápio     |");
+			System.out.println("+==================+");
+			System.out.println("| 1 - Caipirinha  |");
+			System.out.println("| 2 - Dry Martini |");
+			System.out.println("| 3 - Old Fashion |");
+			System.out.println("| 4 - Moscow Mule |");
+			System.out.println("+==================+");
+			opcao = Integer.parseInt(leitor.readLine());
+			
+			switch(opcao) {
+			case 1:
+				objDrink = new Caipirinha ();
+				break;
+			case 2:
+				objDrink = new DryMartini ();
+				break;
+			case 3:
+				objDrink = new OldFashion ();
+				break;
+			case 4:
+				objDrink = new MoscowMule ();
+				break;
+				
+			}
+			((Mixer) objDrink).misturar();
+			objDrink.beber();
+		}catch (Exception erro) {
+			System.out.println("Chega de beber! Vá pra casa");
+		}
+	}
+
+}
+-------------------------------------------------------------------------
