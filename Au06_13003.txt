@@ -1,0 +1,143 @@
+Solido
+package negocio;
+
+public interface Solido {
+	public double calcularArea();
+	
+	public double calcularVolume();
+
+}
+
+--------------------------------------
+
+Cubo
+package negocio;
+
+public class Cubo implements Solido {
+	
+	//Propriedades da Classe
+	private double aresta = 0;
+	
+	//Métodos Construtores da Classe
+	public Cubo() {
+		super();
+	}
+
+	public Cubo(double aresta) {
+		super();
+		this.aresta = aresta;
+	}
+
+	//Métodos de Acesso da Classe
+	public double getAresta() {
+		return aresta;
+	}
+
+	public void setAresta(double aresta) {
+		this.aresta = aresta;
+	}
+	
+	//Métodos Implementados da Interface
+	public double calcularArea() {
+		return(6*Math.pow(getAresta(), 2));
+		
+	}
+    public double calcularVolume() {
+    	return(Math.pow(getAresta(), 3));
+    }
+}
+--------------------------------------------------
+
+Cilindro
+package negocio;
+
+public class Cilindro implements Solido {
+	//Propriedades da Classe
+	private double raio = 0;
+	private double altura = 0;
+	
+	//Métodos Construtores da Classe
+	public Cilindro() {
+		super();
+	}
+
+	public Cilindro(double raio, double altura) {
+		super();
+		this.raio = raio;
+		this.altura = altura;
+	}
+    //Métodos de Acesso da Classe
+
+	public double getRaio() {
+		return raio;
+	}
+
+	public void setRaio(double raio) {
+		this.raio = raio;
+	}
+
+	public double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(double altura) {
+		this.altura = altura;
+	}
+	//Métodos Implementados da Interface
+	public double calcularArea() {
+	return(2 * Math.PI * Math.pow(getRaio(), 2) + 2 * Math.PI * getRaio() * getAltura());
+	}
+	public double calcularVolume() {
+		return(Math.PI * Math.pow(getRaio(), 2) * getAltura());
+	}
+	
+}
+----------------------------------------------------------------------------------------------
+
+VisaoGeometria (Apresentação)
+package apresentacao;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import negocio.Cilindro;
+import negocio.Cubo;
+import negocio.Solido;
+
+public class VisaoGeometria {
+	public static void main(String[] args) {
+		//Declaração de variáveis
+		BufferedReader leitor = new BufferedReader(new InputStreamReader(System.in));
+		Solido objSolido= null;
+		int opcao = 0;
+
+		//Entrada de Dados
+		try {
+			System.out.print("Digite <1> para cubo ou <2> para cilindro: ");
+			opcao = Integer.parseInt(leitor.readLine());
+			
+			if(opcao == 1) {
+				objSolido = new Cubo();
+				System.out.print("Digite a aresta: ");
+				((Cubo) objSolido).setAresta(Double.parseDouble(leitor.readLine()));
+			} else {
+				objSolido = new Cilindro();
+				
+				System.out.print("Digite o raio: ");
+				((Cilindro) objSolido).setRaio(Double.parseDouble(leitor.readLine()));
+				
+				System.out.print("Digite a altura: ");
+				((Cilindro) objSolido).setAltura(Double.parseDouble(leitor.readLine()));
+			}
+			
+		}catch (Exception erro) {
+			System.out.println(erro);
+		}
+		
+		//Saída de Dados
+		System.out.println("Área: " + objSolido.calcularArea());
+		System.out.println("Volume: " + objSolido.calcularVolume());
+	}
+
+}
+
